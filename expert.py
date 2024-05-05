@@ -1,45 +1,43 @@
 from random import choice
 
+
 class ExpertSystem:
-    def __init__(self, symptoms, deseases):
+    def __init__(self, symptoms, diseases):
         self.symptoms = symptoms
-        self.deseases = deseases
+        self.diseases = diseases
         self.current_symptom = None
-        self.current_desease = None
+        self.current_disease = None
     
     def start(self):
         self.current_symptom = choice(self.symptoms)
-        n = int(input(f"What is severity of {self.current_symptom} (0-10) : "))
-        self.current_desease = self.deseases[self.current_symptom]
-        if n>5:
-            print(f"You may have {self.current_desease}")
+        severity = int(input(f"On a scale of 0 to 10, how severe is your {self.current_symptom}? "))
+        self.current_disease = self.diseases.get(self.current_symptom)
+        if severity > 5:
+            print(f"You may have {self.current_disease}")
         else:
-            print(f"You dont have {self.current_desease}")
+            print(f"You probably don't have {self.current_disease}")
             
         self.askNextQuestion()
     
     def askNextQuestion(self):
-        if self.current_desease is not None:
-            n = input("Do you have any other symptoms (yes/no) : ")
-            if n.lower() == "yes":
+        if self.current_disease is not None:
+            answer = input("Do you have any other symptoms (yes/no)? ")
+            if answer.lower() == "yes":
                 self.start()
             else:
-                print("Thank you for using our Expert System !")
+                print("Thank you for using our Expert System!")
         else:
-            print("Sorry, I cant Help you with desease dignosis.")
-            
-if __name__=='__main__':
-    symptoms = ["fever", "cough", "sore throat", "running nose", "headache"]
-    desease = {
-        "fever":"flu",
-        "cough":"cold",
+            print("Sorry, I can't help you with disease diagnosis.")
+
+if __name__ == '__main__':
+    symptoms = ["fever", "cough", "sore throat", "runny nose", "headache"]
+    diseases = {
+        "fever": "flu",
+        "cough": "cold",
         "sore throat": "strep throat",
-        "running nose": "allergies",
+        "runny nose": "allergies",
         "headache": "migraine"
     }
             
-    es = ExpertSystem(symptoms, desease)
+    es = ExpertSystem(symptoms, diseases)
     es.start()
-        
-        
-            
